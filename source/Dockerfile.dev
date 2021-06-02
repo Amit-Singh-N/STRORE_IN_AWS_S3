@@ -1,0 +1,19 @@
+FROM ubuntu:18.04
+ARG EXTRA_INDEX_URL=10.10.163.109
+ARG EXTRA_INDEX_PORT=9073
+RUN apt-get update -y
+RUN apt-get install -y apt-utils
+RUN apt-get upgrade -y
+RUN apt-get install -y python3 python3-pip python3.6-dev build-essential net-tools
+RUN pip3 install --upgrade pip
+RUN mkdir /app\
+    && mkdir -p /app/translation\
+    && mkdir -p /app/ssl\
+    && mkdir -p /app/logs
+COPY src/translation /app/translation
+COPY requirements.txt /app
+COPY ssl/dev /app/ssl
+WORKDIR /app
+ENV PYTHONPATH=/app
+RUN pip3 install -r requirements.txt --extra-index-url http://$EXTRA_INDEX_URL:$EXTRA_INDEX_PORT/simple --trusted-host $EXTRA_INDEX_URL
+ENTRYPOINT ["/usr/bin/python3", "translation/translation_main.py"]
