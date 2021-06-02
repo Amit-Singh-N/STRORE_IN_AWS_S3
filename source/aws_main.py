@@ -5,6 +5,16 @@ import settings as settings
 from abstract_client.s3_uploader import AmazonS3Uploader
 from endpoint_client.endpoint_interface import EndPointDownloader
 
+
+# signal handler for Ctrl+C key press
+def signal_handler(signal, frame):
+    print('pressed Ctrl+C!')
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
+
 try:
     logging.config.dictConfig(settings.logging)
     logger = logging.getLogger(__name__)
@@ -41,6 +51,5 @@ aws_client = AmazonS3Uploader(**aws_conf_setting)
 file_name = aws_client.pre_send()
 logger.info("File name : {}".format(file_name))
 
-response,uri = aws_client.upload()
-logger.info("response: {}".format(response))
+uri = aws_client.upload()
 logger.info("URI : {}".format(uri))

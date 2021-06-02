@@ -1,7 +1,7 @@
 import logging
 from io import BytesIO
 import sys
-import settings as settings
+import settings
 from endpoint_client.abstract_endpoint import AbstractEndpoint
 import requests
 import datetime
@@ -59,9 +59,11 @@ class EndPointDownloader(AbstractEndpoint):
         convert file to the gz
         :return: 1 success
         """
+        if self.file_name is None:
+            return -1
         try:
             with open(self.file_name, 'rb') as f_in:
-                logger.info("open a file ...")
+                #logger.info("open a file ...")
                 with gzip.open(self.file_name + '.gz', 'wb') as f_out:
                     shutil.copyfileobj(f_in, f_out)
             return 1

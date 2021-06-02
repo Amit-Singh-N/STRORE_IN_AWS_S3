@@ -38,7 +38,7 @@ logging = {
         },
         'file': {
             'backupCount': 10,
-            'level': 'DEBUG',
+            'level': 'INFO',
             'maxBytes': 1048576,
             'encoding': 'utf-8',
             'class': 'logging.handlers.RotatingFileHandler',
