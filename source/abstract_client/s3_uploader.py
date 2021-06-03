@@ -80,7 +80,7 @@ class AmazonS3Uploader(AbstractAwsS3):
             location = boto3.client('s3').get_bucket_location(Bucket=self.bucket)['LocationConstraint']
             uri = "https://s3-%s.amazonaws.com/%s/%s" % (location, bucket, key)
             logger.info("uri : {}".format(uri))
-            return response,uri
+            return uri
         except Exception as exc:
             logger.error("Exception when loading a file ..{}".format(exc))
             sys.exit(exc)

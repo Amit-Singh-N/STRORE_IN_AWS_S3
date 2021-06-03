@@ -42,6 +42,7 @@ class EndPointDownloader(AbstractEndpoint):
                     # print(json_record)
                     value_photo_id = int(str(json_record['albumId']) + str(json_record['id']))
                     # print("photo_id ", value_photo_id)
+                    logger.info("photo_id : {}, title : {} , uri : {}, timestamp : {}".format(int(value_photo_id),json_record['title'],json_record['url'].split(".com", 1)[-1],datetime.datetime.now().isoformat()))
                     tsv_writer = csv.writer(out_file, delimiter='\t')
                     tsv_writer.writerow(['photo_id', int(value_photo_id)])
                     tsv_writer.writerow(['title', json_record['title']])
